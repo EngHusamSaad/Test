@@ -13,7 +13,7 @@ def index(request):
     return render(request,"index.html",data)
 
 
-def adddojo(request):
+def adddojo(request):dfdfdfdf
     if request.method == 'POST':
         name=request.POST["name"]
         city=request.POST["city"]
