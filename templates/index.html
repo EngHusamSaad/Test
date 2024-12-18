@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Dojo - Ninja Project</title>
+</head>
+
+<body>
+
+    <div class="addbody">
+
+
+        <form action="/adddojo" method="post" class="input_data">
+            {% csrf_token %}
+
+            <h1>Add A dojo User</h1>
+            <label for="name">Name : </label>
+            <input type="text" name="name" placeholder="name" /><br>
+
+            <label for="city">City : </label>
+            <input type="text" name="city" placeholder="city" /><br>
+
+            <label for="state">State : </label>
+            <input type="text" name="state" placeholder="state  !" /><br>
+
+            <button class="btn btn-primary btn-lg btn-block">Add DoJo User</button>
+            <H2>Dojo Numbers: {{ dojo_count }}</H2>
+
+
+        </form>
+
+
+        <form action="/addninja" method="post" class="input_data">
+            {% csrf_token %}
+            <h1>Add A Ninja User</h1>
+            <label for="first_name">Your First Name: </label>
+            <input type="text" name="first_name" placeholder=" First Name !" /><br>
+
+            <label for="last_name">Your Last Name: </label>
+            <input type="text" name="last_name" placeholder="last Name " /><br>
+
+            <label for="dojo">Dojo: </label>
+            <select name="dojo_select" id="dojos">
+                {% for dojo in all_dojos %}
+                <option value="{{ dojo.name }}">{{ dojo.name }}</option>
+                {% endfor %}
+
+            </select>
+
+            <button class="btn btn-primary btn-lg btn-block">Add NiNja User</button>
+            <H2>Total Ninja Numbers: {{ ninja_count }}</H2>
+
+        </form>
+
+    </div>
+
+    <h1>All the Dojos</h1>
+
+
+    {% for dojo in all_dojos %}
+
+    <div class="item">
+        <h3> Ninjas at the <span style="color: red;">{{ dojo.name }}</span></h3>
+        <form action="/delete_user" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="dojo_id" value="{{ dojo.id }}">
+            <button class="btn btn-danger">Delete Dojo</button>
+        </form>
+    </div>
+
+    {% for ninja in dojo.ninjas.all %}
+    <ul>
+
+
+        <li>{{ ninja.first_name }}</li>
+
+
+    </ul>
+    {% endfor %}
+
+
+    {% endfor %}
+
+
+
+
+    <style>
+        .item {
+            display: flex;
+            justify-content: center;
+            /* border: 2px solid black; */
+
+
+
+
+        }
+
+        .item h3 {
+
+            text-align: center;
+            padding-right: 50px;
+        }
+
+        li {
+
+            text-align: center;
+            list-style-position: inside;
+            color: blue;
+
+        }
+
+        #dojos {
+            width: 60%;
+            margin-left: 80px;
+        }
+
+        p,
+        h3 {
+            text-align: center;
+        }
+
+        .addbody {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid black;
+
+
+        }
+
+        table {
+            border-bottom: 2px solid black;
+            margin: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            text-decoration: underline;
+        }
+
+        .input_data {
+            text-align: center;
+            padding: 5px;
+            margin: 20px;
+        }
+
+        .input_data input {
+            margin: 10px;
+            border: 2px solid black;
+            font-weight: bold;
+        }
+    </style>
+
+</html>
